@@ -12,8 +12,8 @@ namespace GHCBWeb
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-          
-            //System.Data.Entity.Database.SetInitializer(    new GHCBWeb.Models.GHCBContextInitializer());
+
+
 
         }
     }

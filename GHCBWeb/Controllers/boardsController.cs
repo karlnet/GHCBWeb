@@ -118,7 +118,7 @@ namespace GHCBWeb.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var authorization = Request.Headers["Authorization"];
+            //var authorization = Request.Headers["Authorization"];
             if ( 0!=db.boards.Where(b => b.deviceid == board.deviceid).Count())
                 return BadRequest();
 

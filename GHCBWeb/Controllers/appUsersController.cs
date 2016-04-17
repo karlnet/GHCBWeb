@@ -25,6 +25,7 @@ namespace GHCBWeb.Controllers
         }
 
         // GET: api/appUsers/5
+        [Authorize]
         [ResponseType(typeof(appUser))]
         public async Task<IHttpActionResult> GetappUser(int id)
         {

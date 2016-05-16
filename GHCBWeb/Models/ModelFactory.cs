@@ -1,4 +1,5 @@
-﻿using GHCBWeb.Infrastructure;
+﻿using GHCBWeb.Data.Entities;
+using GHCBWeb.Infrastructure;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,49 @@ namespace GHCBWeb.Models
                 Name = appRole.Name
             };
         }
-        
 
+
+        public BoardModel Create(Board board)
+        {
+
+            return new BoardModel
+            {
+                Url = _UrlHelper.Link("BoardRoute", new { id = board.Id }),
+                Id = board.Id,
+                SerialNo = board.SerialNo,
+                Alias = board.Name,
+                MAC = board.MAC,
+                ROMVersion = board.ROMVersion,
+                Description = board.Description,
+                Privateip = board.Privateip,
+                Publicip = board.Publicip,
+                SSID = board.SSID,
+                BSSID = board.BSSID,
+                Deviceid = board.Deviceid,
+                Status = board.Status,
+                Offtime = board.Offtime,
+                Onlinetime = board.Onlinetime,
+                Createtime = board.Createtime
+            };
+        }
+
+        public BoardPortsModel Create(BoardPort boardPort)
+        {
+
+            return new BoardPortsModel
+            {
+                //Url = _UrlHelper.Link("BoardPortRoute", new { portId = boardPort.Id }),
+                BoardId = boardPort.BoardId,
+                PortId = boardPort.Id,
+                PortNo = boardPort.Port,
+                PortName = boardPort.Alias,
+                PortTypeId = boardPort.PortDescriptionId,
+                PortTypeName = boardPort.portDescription.DeviceModel,
+                PortType = boardPort.portDescription.DeviceType,
+                PortTypeDescription = boardPort.portDescription.Description,
+                ClassType = boardPort.portDescription.ClassType
+            };
+        }
         public UserReturnModel Create(ApplicationUser appUser)
         {
             return new UserReturnModel
@@ -41,12 +83,12 @@ namespace GHCBWeb.Models
                 Id = appUser.Id,
                 UserName = appUser.UserName,
                 //FullName = string.Format("{0} {1}", appUser.FirstName, appUser.LastName),
-                Email = appUser.Email,
-                EmailConfirmed = appUser.EmailConfirmed,
-                Level = appUser.Level,
-                JoinDate = appUser.JoinDate,
-                Roles = _AppUserManager.GetRolesAsync(appUser.Id).Result,
-                Claims = _AppUserManager.GetClaimsAsync(appUser.Id).Result
+                //Email = appUser.Email,
+                //EmailConfirmed = appUser.EmailConfirmed,
+                //Level = appUser.Level,
+                //JoinDate = appUser.JoinDate,
+                //Roles = _AppUserManager.GetRolesAsync(appUser.Id).Result,
+                //Claims = _AppUserManager.GetClaimsAsync(appUser.Id).Result
             };
         }
     }
@@ -61,12 +103,13 @@ namespace GHCBWeb.Models
         public string Url { get; set; }
         public string Id { get; set; }
         public string UserName { get; set; }
+     
         //public string FullName { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public int Level { get; set; }
-        public DateTime JoinDate { get; set; }
-        public IList<string> Roles { get; set; }
-        public IList<System.Security.Claims.Claim> Claims { get; set; }
+        //public string Email { get; set; }
+        //public bool EmailConfirmed { get; set; }
+        //public int Level { get; set; }
+        //public DateTime JoinDate { get; set; }
+        //public IList<string> Roles { get; set; }
+        //public IList<System.Security.Claims.Claim> Claims { get; set; }
     }
 }

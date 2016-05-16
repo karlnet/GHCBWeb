@@ -18,33 +18,31 @@ namespace GHCBWeb.Infrastructure
             : base(store)
         {
         }
-
+        
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var appDbContext = context.Get<ApplicationDbContext>();
             var appUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(appDbContext));
 
 
-
-           
             //Configure validation logic for usernames
-            appUserManager.UserValidator =  new MyCustomUserValidator(appUserManager)
+            appUserManager.UserValidator = new MyCustomUserValidator(appUserManager)
             {
                 AllowOnlyAlphanumericUserNames = true,
-                RequireUniqueEmail = true
+                RequireUniqueEmail = false
             };
-         
+
             //Configure validation logic for passwords
             appUserManager.PasswordValidator = new MyCustomPasswordValidator
             {
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = false,
-                RequireLowercase = true,
+                RequireLowercase = false,
                 RequireUppercase = false,
             };
 
-            appUserManager.EmailService = new EmailService();
+            //appUserManager.EmailService = new EmailService();
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)

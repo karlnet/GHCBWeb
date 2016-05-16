@@ -23,7 +23,7 @@ namespace GHCBWeb.Services
             var myMessage = new SendGridMessage();
 
             myMessage.AddTo(message.Destination);
-            myMessage.From = new System.Net.Mail.MailAddress("orinoco@vip.163.com", "zhang xianbo");
+            myMessage.From = new System.Net.Mail.MailAddress("orinoco@vip.163.com", "hhnext.com");
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;

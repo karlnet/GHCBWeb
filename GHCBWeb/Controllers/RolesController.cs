@@ -1,4 +1,5 @@
-﻿using GHCBWeb.Models;
+﻿using GHCBWeb.Data;
+using GHCBWeb.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -15,7 +16,7 @@ namespace GHCBWeb.Controllers
     [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
-
+     
         [Route("{id:guid}", Name = "GetRoleById")]
         public async Task<IHttpActionResult> GetRole(string Id)
         {

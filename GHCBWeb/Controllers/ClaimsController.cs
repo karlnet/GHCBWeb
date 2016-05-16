@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GHCBWeb.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,7 @@ namespace GHCBWeb.Controllers
     [RoutePrefix("api/claims")]
     public class ClaimsController : BaseApiController
     {
+       
         [Authorize]
         [Route("")]
         public IHttpActionResult GetClaims()

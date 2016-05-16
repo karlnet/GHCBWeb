@@ -1,10 +1,13 @@
-﻿using GHCBWeb.Infrastructure;
+﻿using GHCBWeb.Data;
+using GHCBWeb.Infrastructure;
 using GHCBWeb.Providers;
+using GHCBWeb.Resolver;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
@@ -24,13 +27,12 @@ namespace GHCBWeb
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
 
-           
-
             ConfigureOAuthTokenGeneration(app);
 
-            ConfigureOAuthTokenConsumption(app);
+            //ConfigureOAuthTokenConsumption(app);
 
-            ConfigureWebApi(httpConfig);
+            //ConfigureWebApi(httpConfig);
+            WebApiConfig.Register(httpConfig);
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
@@ -40,18 +42,36 @@ namespace GHCBWeb
 
       
 
-        private void ConfigureWebApi(HttpConfiguration config)
-        {
-            config.MapHttpAttributeRoutes();
+        //private void ConfigureWebApi(HttpConfiguration config)
+        //{
 
-            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-        }
+        //    config.MapHttpAttributeRoutes();
+
+        //    config.Routes.MapHttpRoute(
+        //      name: "DefaultApi",
+        //      routeTemplate: "api/{controller}/{id}",
+        //      defaults: new { id = RouteParameter.Optional }
+        //  );
+
+        //    // Web API 配置和服务
+        //    var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+        //    jsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        //    jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+
+
+        //    //Web API configuration and services
+        //    var container = new UnityContainer();
+        //    container.RegisterType<ApplicationDbContext>(new HierarchicalLifetimeManager());
+        //    container.RegisterType<IGHCBRepository, GHCBRepository>(new HierarchicalLifetimeManager());
+           
+        //    config.DependencyResolver = new UnityResolver(container);
+        //}
 
         private void ConfigureOAuthTokenConsumption(IAppBuilder app)
         {
 
-            var issuer = "http://localhost:57793";
+            var issuer = "http://hhnext.com";
             string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
             byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
 
@@ -82,7 +102,7 @@ namespace GHCBWeb
                 TokenEndpointPath = new PathString("/oauth/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://localhost:57793")
+                AccessTokenFormat = new CustomJwtFormat("http://hhnext.com")
             };
 
             // OAuth 2.0 Bearer Access Token Generation
